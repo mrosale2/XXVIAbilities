@@ -92,14 +92,12 @@
             <div class="max-w-5xl mx-auto">
                 <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center gap-4">
-                        <a href="../OpenPlay/hub.html" class="text-blue-600 text-[13px] no-underline font-bold tracking-wide px-3 py-1.5 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors" id="hub-link">&#9664; HUB</a>
                         <h1 class="font-black accent-text uppercase text-lg tracking-wider cursor-pointer" onclick="resetAndHome()">XXVI Abilities</h1>
                     </div>
                     <div id="vs-count-main"></div>
                 </div>
                 <div class="flex gap-2 justify-center uppercase">
-                    <div id="tab-reg" class="cursor-pointer nav-tab" onclick="setGlobalTab('reg')">Abilities</div>
-                    <div id="tab-xf" class="cursor-pointer nav-tab" onclick="setGlobalTab('xf')">X-Factors</div>
+                    <div id="tab-all" class="cursor-pointer nav-tab" onclick="setGlobalTab('all')">All Abilities</div>
                     <div id="tab-outputs" class="cursor-pointer nav-tab" onclick="setGlobalTab('outputs')">Browse Outputs</div>
                 </div>
             </div>
@@ -338,7 +336,7 @@ const outputLookup = {
 };
 const positionMap = {
   "3rd-down-threat": ["WR", "TE"],
-  "Acrobat": ["DB", "WR"],
+  "Acrobat": ["WR", "DB"],
   "Adrenaline-Rush": ["DL"],
   "Agile-Extender": ["QB"],
   "All-Day": ["OL"],
@@ -356,11 +354,11 @@ const positionMap = {
   "Bench-Press": ["DB"],
   "Bruiser": ["HB"],
   "Bulldozer": ["HB"],
-  "Chuck-Out": ["DB", "LB"],
-  "Closer": ["MULTI"],
-  "Clutch": ["MULTI"],
+  "Chuck-Out": ["DB"],
+  "Closer": ["OFF", "DEF"],
+  "Clutch": ["OFF", "DEF"],
   "Clutch-Kicker": ["K"],
-  "Comeback": ["MULTI"],
+  "Comeback": ["OFF", "DEF"],
   "Conducter": ["QB"],
   "Crusher": ["LB", "DB"],
   "Dashing-Deadeye": ["QB"],
@@ -387,7 +385,7 @@ const positionMap = {
   "Extra-Pop": ["LB", "DB"],
   "Fastbreak": ["QB"],
   "Fearless": ["QB"],
-  "Film-Study": ["MULTI"],
+  "Film-Study": ["DEF"],
   "Flat-Zone-KO": ["DB", "LB"],
   "Focused-Kicker": ["K"],
   "Fool-Me-Once": ["OL"],
@@ -395,21 +393,21 @@ const positionMap = {
   "Gift-Wrapped": ["QB"],
   "Goal-Line-Back": ["HB"],
   "Goal-Line-Stuff": ["DL", "LB"],
-  "Grab-N-Go": ["HB", "WR"],
+  "Grab-N-Go": ["WR", "HB"],
   "Gunslinger": ["QB"],
   "Gutsy-Scrambler": ["QB"],
   "High-Point-Deadeye": ["QB"],
-  "Homer": ["MULTI"],
+  "Homer": ["OFF", "DEF"],
   "Honorary-Lineman": ["WR", "TE", "HB"],
   "Human-Joystick": ["HB"],
-  "Identifier": ["MULTI"],
-  "Indoor-Baller": ["MULTI"],
+  "Identifier": ["OFF", "DEF"],
+  "Indoor-Baller": ["OFF", "DEF"],
   "Inside-Deadeye": ["QB"],
   "Inside-Shade": ["DB"],
   "Inside-Stuff": ["DL", "LB"],
   "Instant-Rebate": ["DL", "LB"],
   "Interior-Threat": ["DL"],
-  "Ironman": ["MULTI"],
+  "Ironman": ["OFF", "DEF"],
   "Juke-Box": ["HB"],
   "Leap-Frog": ["HB"],
   "Lifeguard": ["OL"],
@@ -417,8 +415,8 @@ const positionMap = {
   "Lofting-Deadeye": ["QB"],
   "Long-Range-Deadeye": ["QB"],
   "Lumberjack": ["LB", "DB"],
-  "Lurk-Artist": ["DB"],
-  "Lurker": ["DB"],
+  "Lurk-Artist": ["DB", "LB"],
+  "Lurker": ["DB", "LB"],
   "Max-Effort": ["DL"],
   "Master-Tactician": ["QB"],
   "Matador": ["OL"],
@@ -429,7 +427,7 @@ const positionMap = {
   "Mid-In-Elite": ["WR", "TE"],
   "Mid-Out-Elite": ["WR"],
   "Mid-Zone-KO": ["DB", "LB"],
-  "Mr-Big-Stop": ["LB", "DB"],
+  "Mr-Big-Stop": ["DL", "LB"],
   "Nasty-Streak": ["OL"],
   "Natural-Talent": ["OL"],
   "No-Outsiders": ["DL", "LB"],
@@ -444,7 +442,7 @@ const positionMap = {
   "Pass-Commited": ["DL", "LB"],
   "Pass-Lead-Elite": ["QB"],
   "Pass-Protector": ["OL"],
-  "Persistent": ["MULTI"],
+  "Persistent": ["OFF", "DEF"],
   "Pick Artist": ["DB"],
   "Playmaker": ["WR", "TE", "HB"],
   "Pocket-Deadeye": ["QB"],
@@ -457,10 +455,10 @@ const positionMap = {
   "RB-Apprentice": ["HB"],
   "Reach-Elite": ["DL", "LB"],
   "Reach-For-It": ["HB"],
-  "Recuperation": ["MULTI"],
+  "Recuperation": ["OFF", "DEF"],
   "Red-Zone-Deadeye": ["QB"],
   "Red-Zone-Threat": ["WR", "TE"],
-  "Return-Man": ["HB"],
+  "Return-Man": ["HB", "WR"],
   "Ripper": ["DL"],
   "Roaming-Deadeye": ["QB"],
   "Route-Apprentice": ["WR", "TE", "HB"],
@@ -471,7 +469,7 @@ const positionMap = {
   "Runoff-Elite": ["WR", "TE", "HB"],
   "Safety-Valve": ["QB"],
   "Screen-Protector": ["OL"],
-  "Second-Wind": ["MULTI"],
+  "Second-Wind": ["OFF", "DEF"],
   "Secure-Protector": ["OL"],
   "Secure-Tackler": ["LB", "DB"],
   "Set-Feet-Lead": ["QB"],
@@ -495,7 +493,7 @@ const positionMap = {
   "Tear Proof": ["OL"],
   "Threat-Detector": ["QB"],
   "Tight-Out": ["QB"],
-  "Tip-Drill": ["WR", "TE", "DB", "HB"],
+  "Tip-Drill": ["WR", "TE", "DB"],
   "Tireless-Runner": ["HB"],
   "Tough-Nut": ["OL"],
   "Under-Pressure": ["DL"],
@@ -507,7 +505,7 @@ const positionMap = {
   "Ankle-Breaker": ["WR", "TE", "HB"],
   "Avalanche": ["LB", "DB"],
   "Bazooka": ["QB"],
-  "Blitz": ["DL", "LB"],
+  "Blitz": ["DL"],
   "Blitz-Radar": ["QB"],
   "Bottleneck": ["DB"],
   "Brick-Wall": ["QB"],
@@ -523,7 +521,7 @@ const positionMap = {
   "GrabAndSmash": ["WR", "TE", "HB"],
   "Max-Security": ["WR", "TE"],
   "Mind Reader": ["DB", "LB"],
-  "Momentum-Shift": ["MULTI"],
+  "Momentum-Shift": ["OFF", "DEF"],
   "Mossed": ["WR"],
   "Omaha": ["QB"],
   "Phenom": ["WR", "TE", "HB", "DB"],
@@ -535,7 +533,7 @@ const positionMap = {
   "Run-&-Gun": ["QB"],
   "Run-Stuffer": ["DL", "LB"],
   "Satellite": ["HB"],
-  "Selfless": ["MULTI"],
+  "Selfless": ["OFF", "DEF"],
   "Shutdown": ["DB"],
   "Truzz": ["HB"],
   "Universal-Coverage": ["DB"],
@@ -2652,6 +2650,7 @@ const positionMap = {
         window.triggerFilter = "";
         window.outputFilter = "";
         window.posFilter = "";
+        window.catFilter = "";
 
         function getTriggerCounts() {
             const counts = {};
@@ -2677,7 +2676,7 @@ const positionMap = {
         }
 
         function getPositionColors(pos) {
-            const colors = { QB: "bg-red-100 text-red-700", WR: "bg-purple-100 text-purple-700", HB: "bg-amber-100 text-amber-700", TE: "bg-cyan-100 text-cyan-700", OL: "bg-gray-200 text-gray-700", DL: "bg-rose-100 text-rose-700", LB: "bg-orange-100 text-orange-700", DB: "bg-sky-100 text-sky-700", K: "bg-lime-100 text-lime-700", MULTI: "bg-indigo-100 text-indigo-700" };
+            const colors = { QB: "bg-red-100 text-red-700", WR: "bg-purple-100 text-purple-700", HB: "bg-amber-100 text-amber-700", TE: "bg-cyan-100 text-cyan-700", OL: "bg-gray-200 text-gray-700", DL: "bg-rose-100 text-rose-700", LB: "bg-orange-100 text-orange-700", DB: "bg-sky-100 text-sky-700", K: "bg-lime-100 text-lime-700", OFF: "bg-green-100 text-green-700", DEF: "bg-red-100 text-red-700" };
             return colors[pos] || "bg-gray-100 text-gray-600";
         }
 
@@ -2700,6 +2699,7 @@ const positionMap = {
             window.triggerFilter = "";
         window.outputFilter = "";
         window.posFilter = "";
+        window.catFilter = "";
             compareIds = [];
             render('list');
         }
@@ -2710,11 +2710,12 @@ const positionMap = {
             window.triggerFilter = "";
         window.outputFilter = "";
         window.posFilter = "";
+        window.catFilter = "";
             compareIds = []; 
             document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
-            document.getElementById(`tab-${t}`).classList.add('active');
+            const tabEl = document.getElementById(`tab-${t}`); if (tabEl) tabEl.classList.add('active');
             if (t === 'outputs') { window.outputBrowseQuery = ''; render('outputs-browse'); }
-            else render('list'); 
+            else { currentTab = 'all'; render('list'); } 
         }
 
         function toggleCompare(id) {
@@ -2749,7 +2750,10 @@ const positionMap = {
                 const allPositions = getAllPositions();
 
                 let filtered = filterTag ? abilities.filter(a => [...a.triggers.active, ...a.triggers.deactive, ...Object.values(a.outputGroups).flat()].includes(filterTag))
-                                         : abilities.filter(a => (mainSearchQuery ? true : a.category === currentTab) && a.name.toLowerCase().includes(mainSearchQuery.toLowerCase()));
+                                         : abilities.filter(a => a.name.toLowerCase().includes(mainSearchQuery.toLowerCase()));
+                if (window.catFilter && !filterTag) {
+                    filtered = filtered.filter(a => a.category === window.catFilter);
+                }
                 if (window.triggerFilter && !filterTag) {
                     filtered = filtered.filter(a => a.triggers.active.includes(window.triggerFilter) || a.triggers.deactive.includes(window.triggerFilter));
                 }
@@ -2775,17 +2779,22 @@ const positionMap = {
                         <div class="flex gap-2 items-stretch flex-wrap">
                             <div class="search-wrap flex-1" style="min-width:180px">
                                 <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                                <input type="text" id="main-search" placeholder="Search ${abilities.filter(a=>a.category===currentTab).length} abilities..." value="${mainSearchQuery}" class="w-full bg-white border-2 border-gray-200 py-3 rounded-xl text-[15px] font-medium outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all placeholder-gray-400 shadow-sm">
+                                <input type="text" id="main-search" placeholder="Search ${abilities.length} abilities..." value="${mainSearchQuery}" class="w-full bg-white border-2 border-gray-200 py-3 rounded-xl text-[15px] font-medium outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all placeholder-gray-400 shadow-sm">
                             </div>
+                            <select id="cat-filter" class="appearance-none bg-white border-2 ${window.catFilter ? 'border-orange-400 ring-2 ring-orange-100' : 'border-gray-200'} h-full pl-3 pr-8 rounded-xl text-[13px] font-bold text-gray-600 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer" style="min-width:110px;padding-top:12px;padding-bottom:12px">
+                                <option value="">Type</option>
+                                <option value="reg" ${window.catFilter === 'reg' ? 'selected' : ''}>Abilities</option>
+                                <option value="xf" ${window.catFilter === 'xf' ? 'selected' : ''}>X-Factors</option>
+                            </select>
                             <select id="pos-filter" class="appearance-none bg-white border-2 ${window.posFilter ? 'border-violet-400 ring-2 ring-violet-100' : 'border-gray-200'} h-full pl-3 pr-8 rounded-xl text-[13px] font-bold text-gray-600 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer" style="min-width:100px;padding-top:12px;padding-bottom:12px">
                                 <option value="">Position</option>
                                 ${allPositions.map(p => `<option value="${p}" ${window.posFilter === p ? 'selected' : ''}>${p}</option>`).join('')}
                             </select>
-                            <select id="trigger-filter" class="appearance-none bg-white border-2 ${window.triggerFilter ? 'border-emerald-400 ring-2 ring-emerald-100' : 'border-gray-200'} h-full pl-3 pr-8 rounded-xl text-[13px] font-bold text-gray-600 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer" style="min-width:160px;padding-top:12px;padding-bottom:12px">
+                            <select id="trigger-filter" class="appearance-none bg-white border-2 ${window.triggerFilter ? 'border-emerald-400 ring-2 ring-emerald-100' : 'border-gray-200'} h-full pl-3 pr-8 rounded-xl text-[13px] font-bold text-gray-600 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer" style="min-width:180px;padding-top:12px;padding-bottom:12px">
                                 <option value="">Trigger</option>
                                 ${triggerCounts.map(([k, c]) => `<option value="${k}" ${window.triggerFilter === k ? 'selected' : ''}>${triggerLookup[k]?.l || k} (${c})</option>`).join('')}
                             </select>
-                            <select id="output-filter" class="appearance-none bg-white border-2 ${window.outputFilter ? 'border-blue-400 ring-2 ring-blue-100' : 'border-gray-200'} h-full pl-3 pr-8 rounded-xl text-[13px] font-bold text-gray-600 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer" style="min-width:160px;padding-top:12px;padding-bottom:12px">
+                            <select id="output-filter" class="appearance-none bg-white border-2 ${window.outputFilter ? 'border-blue-400 ring-2 ring-blue-100' : 'border-gray-200'} h-full pl-3 pr-8 rounded-xl text-[13px] font-bold text-gray-600 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer" style="min-width:180px;padding-top:12px;padding-bottom:12px">
                                 <option value="">Output</option>
                                 ${outputCounts.map(([k, c]) => `<option value="${k}" ${window.outputFilter === k ? 'selected' : ''}>${outputLookup[k]?.l || k} (${c})</option>`).join('')}
                             </select>
@@ -2797,15 +2806,15 @@ const positionMap = {
                                 <button onclick="filterTag=null; render('list')" class="text-gray-400 hover:text-red-500 text-lg leading-none px-1 font-bold transition-colors" title="Clear filter">&#10005;</button>
                             </div>
                         ` : ''}
-                        ${(window.triggerFilter || window.outputFilter || window.posFilter) && !filterTag ? `
+                        ${(window.triggerFilter || window.outputFilter || window.posFilter || window.catFilter) && !filterTag ? `
                             <div class="flex items-center gap-2 flex-wrap">
-                                ${window.posFilter ? `<div class="flex items-center gap-2 bg-violet-50 border border-violet-200 px-3 py-1.5 rounded-lg"><span class="text-violet-700 font-bold text-[12px] uppercase">${window.posFilter}</span><button onclick="window.posFilter=''; render('list')" class="text-gray-400 hover:text-red-500 font-bold text-sm leading-none">&#10005;</button></div>` : ''}
+                                ${window.catFilter ? `<div class="flex items-center gap-2 bg-orange-50 border border-orange-200 px-3 py-1.5 rounded-lg"><span class="text-orange-700 font-bold text-[12px] uppercase">${window.catFilter === 'xf' ? 'X-Factor' : 'Ability'}</span><button onclick="window.catFilter=''; render('list')" class="text-gray-400 hover:text-red-500 font-bold text-sm leading-none">&#10005;</button></div>` : ''}${window.posFilter ? `<div class="flex items-center gap-2 bg-violet-50 border border-violet-200 px-3 py-1.5 rounded-lg"><span class="text-violet-700 font-bold text-[12px] uppercase">${window.posFilter}</span><button onclick="window.posFilter=''; render('list')" class="text-gray-400 hover:text-red-500 font-bold text-sm leading-none">&#10005;</button></div>` : ''}
                                 ${window.triggerFilter ? `<div class="flex items-center gap-2 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg"><span class="text-emerald-700 font-bold text-[12px] uppercase">Trigger: ${triggerLookup[window.triggerFilter]?.l || window.triggerFilter}</span><button onclick="window.triggerFilter=''; render('list')" class="text-gray-400 hover:text-red-500 font-bold text-sm leading-none">&#10005;</button></div>` : ''}
                                 ${window.outputFilter ? `<div class="flex items-center gap-2 bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-lg"><span class="text-blue-700 font-bold text-[12px] uppercase">Output: ${outputLookup[window.outputFilter]?.l || window.outputFilter}</span><button onclick="window.outputFilter=''; render('list')" class="text-gray-400 hover:text-red-500 font-bold text-sm leading-none">&#10005;</button></div>` : ''}
                                 <span class="stat-pill">${filtered.length} result${filtered.length !== 1 ? 's' : ''}</span>
                             </div>
                         ` : ''}
-                        ${!filterTag && !window.triggerFilter && !window.outputFilter && !window.posFilter && filtered.length > 0 ? `<div class="flex items-center gap-2"><span class="stat-pill">${filtered.length} abilities</span>${compareIds.length > 0 ? `<span class="stat-pill" style="background:#eff6ff;color:#2563eb">${compareIds.length} selected</span>` : ''}${lastAbility ? `<span class="stat-pill" style="background:#fef3c7;color:#92400e">Comparing overlap with ${lastAbility.name}</span><button onclick="window.lastDetailId=null; render('list')" class="text-gray-400 hover:text-red-500 font-bold text-sm leading-none ml-1">&#10005;</button>` : ''}</div>` : ''}
+                        ${!filterTag && !window.triggerFilter && !window.outputFilter && !window.posFilter && !window.catFilter && filtered.length > 0 ? `<div class="flex items-center gap-2"><span class="stat-pill">${filtered.length} abilities</span>${compareIds.length > 0 ? `<span class="stat-pill" style="background:#eff6ff;color:#2563eb">${compareIds.length} selected</span>` : ''}${lastAbility ? `<span class="stat-pill" style="background:#fef3c7;color:#92400e">Comparing overlap with ${lastAbility.name}</span><button onclick="window.lastDetailId=null; render('list')" class="text-gray-400 hover:text-red-500 font-bold text-sm leading-none ml-1">&#10005;</button>` : ''}</div>` : ''}
                     </div>
                     <div class="ability-grid">
                         ${filtered.length === 0 ? '<div class="text-center text-gray-400 font-medium text-[15px] py-16 col-span-full">No abilities match your filters</div>' : ''}
@@ -2863,6 +2872,12 @@ const positionMap = {
                 const pFilter = document.getElementById('pos-filter');
                 if (pFilter) pFilter.addEventListener('change', (e) => {
                     window.posFilter = e.target.value;
+                    if (filterTag) filterTag = null;
+                    render('list');
+                });
+                const cFilter = document.getElementById('cat-filter');
+                if (cFilter) cFilter.addEventListener('change', (e) => {
+                    window.catFilter = e.target.value;
                     if (filterTag) filterTag = null;
                     render('list');
                 });
@@ -3112,7 +3127,6 @@ const positionMap = {
             }
         }
 
-        setGlobalTab('reg');
+        setGlobalTab('all');
     </script>
-</body>
-</html>
+<
