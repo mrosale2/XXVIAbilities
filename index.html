@@ -5,41 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XXVI Abilities</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { theme: { extend: { } } }</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        #bg-video { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -1; object-fit: cover; opacity: 0.15; pointer-events: none; }
-        body { margin: 0; background-color: #050505; color: #e5e7eb; font-family: 'Inter', sans-serif; font-size: 10px; overflow-x: hidden; letter-spacing: -0.01em; min-height: 100vh; display: flex; flex-direction: column; }
-        .card-bg { background: rgba(10, 10, 10, 0.98); border: 1px solid #222; backdrop-filter: blur(15px); }
-        .gold-text { color: #d4af37; }
-        
-        .matrix-container { overflow-x: auto; border: 1px solid #222; width: 100%; }
+        #bg-video { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: -1; object-fit: cover; opacity: 0.03; pointer-events: none; }
+        body { margin: 0; background-color: #f8f9fb; color: #1a1a2e; font-family: 'Inter', system-ui, sans-serif; font-size: 15px; overflow-x: hidden; letter-spacing: -0.01em; min-height: 100vh; display: flex; flex-direction: column; }
+        .card-bg { background: #ffffff; border: 1px solid #e2e5ea; border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); transition: box-shadow 0.2s, border-color 0.2s; }
+        .card-bg:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: #cbd0d8; }
+        .accent-text { color: #2563eb; }
+
+        .matrix-container { overflow-x: auto; border: 1px solid #e2e5ea; border-radius: 10px; width: 100%; background: #fff; }
         .matrix-table { border-collapse: collapse; width: 100%; table-layout: fixed; }
-        .matrix-table th, .matrix-table td { border: 1px solid #222; padding: 4px; vertical-align: middle; }
-        
-        .sticky-col { 
-            position: sticky; left: 0; background: #0d0d0d; z-index: 10; 
-            width: 110px; min-width: 110px; box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+        .matrix-table th, .matrix-table td { border: 1px solid #e8eaed; padding: 8px 6px; vertical-align: middle; }
+        .matrix-table tr:nth-child(even) td { background: #f8f9fb; }
+        .matrix-table tr:hover td { background: #eef2ff; }
+
+        .sticky-col {
+            position: sticky; left: 0; background: #ffffff; z-index: 10;
+            width: 220px; min-width: 220px; box-shadow: 3px 0 8px rgba(0,0,0,0.06);
         }
+        .matrix-table tr:nth-child(even) .sticky-col { background: #f8f9fb; }
+        .matrix-table tr:hover .sticky-col { background: #eef2ff; }
 
         .header-cell-content { display: flex; flex-direction: column; align-items: center; width: 100%; }
-        .header-text-rotated { text-align: center; line-height: 1.1; margin-top: 2px; font-size: 9px; font-weight: 900; text-transform: uppercase; }
-        
-        .ability-icon { width: 16px; height: 16px; object-fit: contain; }
-        .ability-icon-lg { width: 32px; height: 32px; object-fit: contain; }
-        .matrix-icon { width: 18px; height: 18px; object-fit: contain; }
+        .header-text-rotated { text-align: center; line-height: 1.2; margin-top: 4px; font-size: 12px; font-weight: 700; text-transform: uppercase; color: #374151; }
 
-        .check-col { width: 50px; min-width: 50px; text-align: center; font-size: 12px; }
-        .portal-overlay { background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 10px; }
-        input[type="checkbox"] { width: 12px; height: 12px; accent-color: #d4af37; cursor: pointer; }
-        .nav-tab.active { color: white; border-bottom: 2px solid #d4af37; }
-        .section-divider { background: #151515; font-weight: 900; text-align: center; color: #d4af37; font-size: 8px; letter-spacing: 1.5px; padding: 4px !important; text-transform: uppercase; }
-        
-        .custom-scroll::-webkit-scrollbar { width: 2px; height: 2px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #d4af37; }
+        .ability-icon { width: 28px; height: 28px; object-fit: contain; }
+        .ability-icon-lg { width: 48px; height: 48px; object-fit: contain; }
+        .matrix-icon { width: 28px; height: 28px; object-fit: contain; }
+
+        .check-col { width: 60px; min-width: 60px; text-align: center; font-size: 16px; }
+        .portal-overlay { background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        input[type="checkbox"] { width: 18px; height: 18px; accent-color: #2563eb; cursor: pointer; border-radius: 4px; }
+        .nav-tab { padding: 8px 20px; border-radius: 8px; font-size: 14px; font-weight: 700; color: #6b7280; transition: all 0.2s; letter-spacing: 0.5px; }
+        .nav-tab:hover { background: #f0f4ff; color: #2563eb; }
+        .nav-tab.active { background: #2563eb; color: #ffffff !important; }
+        .section-divider { background: #f0f4ff; font-weight: 800; text-align: center; color: #2563eb; font-size: 12px; letter-spacing: 1.5px; padding: 10px !important; text-transform: uppercase; }
+
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #2563eb; border-radius: 3px; }
 
         .group-item:not(:last-child) {
-            border-bottom: 1px solid #222;
-            padding-bottom: 4px;
-            margin-bottom: 4px;
+            border-bottom: 1px solid #f0f1f3;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+        }
+        .group-item:hover { background: #f8f9fb; border-radius: 6px; margin: -4px; padding: 4px; margin-bottom: 4px; padding-bottom: 12px; }
+        .group-item { cursor: pointer; }
+
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .search-wrap { position: relative; }
+        .search-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #9ca3af; pointer-events: none; }
+        .search-wrap input { padding-left: 42px; }
+
+        .ability-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        @media (min-width: 640px) { .ability-grid { grid-template-columns: 1fr 1fr; } }
+        @media (min-width: 1024px) { .ability-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+        .stat-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: #6b7280; background: #f3f4f6; border-radius: 20px; padding: 4px 12px; }
+
+        .trigger-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; }
+        .trigger-card .label { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid; }
+        .trigger-card.green .label { color: #059669; border-color: #d1fae5; }
+        .trigger-card.red .label { color: #dc2626; border-color: #fee2e2; }
+
+        .output-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; }
+        .output-card-header { background: #f0f7ff; padding: 10px 16px; font-size: 13px; font-weight: 800; color: #2563eb; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #dbeafe; }
+        .output-card-body { padding: 12px 16px; }
+
+        .desc-callout { background: #f8fafc; border-left: 4px solid #2563eb; border-radius: 0 10px 10px 0; padding: 16px 20px; font-size: 15px; line-height: 1.6; color: #475569; }
+
+        @media (max-width: 768px) {
+            .sticky-col { width: 160px; min-width: 160px; }
+            .triggers-grid { grid-template-columns: 1fr !important; }
+            .ability-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -47,17 +88,23 @@
     <video autoplay muted loop id="bg-video"><source src="Mainmenu.mp4" type="video/mp4"></video>
     
     <div id="main-wrapper" class="flex flex-col flex-1 relative w-full">
-        <header class="p-2 border-b border-zinc-900 sticky top-0 bg-black/95 z-40">
-            <div class="flex items-center justify-between mb-1">
-                <h1 class="font-black gold-text uppercase text-[8px] tracking-widest cursor-pointer" onclick="resetAndHome()">XXVI Abilities</h1>
-                <div id="vs-count-main"></div>
-            </div>
-            <div class="flex gap-4 justify-center text-[8px] font-black uppercase">
-                <div id="tab-reg" class="cursor-pointer nav-tab" onclick="setGlobalTab('reg')">Abilities</div>
-                <div id="tab-xf" class="cursor-pointer nav-tab" onclick="setGlobalTab('xf')">X-Factors</div>
+        <header class="px-4 py-3 border-b border-gray-200 sticky top-0 bg-white/95 backdrop-blur-sm z-40 shadow-sm">
+            <div class="max-w-5xl mx-auto">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-4">
+                        <a href="../OpenPlay/hub.html" class="text-blue-600 text-[13px] no-underline font-bold tracking-wide px-3 py-1.5 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors" id="hub-link">&#9664; HUB</a>
+                        <h1 class="font-black accent-text uppercase text-lg tracking-wider cursor-pointer" onclick="resetAndHome()">XXVI Abilities</h1>
+                    </div>
+                    <div id="vs-count-main"></div>
+                </div>
+                <div class="flex gap-2 justify-center uppercase">
+                    <div id="tab-reg" class="cursor-pointer nav-tab" onclick="setGlobalTab('reg')">Abilities</div>
+                    <div id="tab-xf" class="cursor-pointer nav-tab" onclick="setGlobalTab('xf')">X-Factors</div>
+                    <div id="tab-outputs" class="cursor-pointer nav-tab" onclick="setGlobalTab('outputs')">Browse Outputs</div>
+                </div>
             </div>
         </header>
-        <main id="app" class="p-1.5 w-full flex-1 flex flex-col pb-20"></main>
+        <main id="app" class="p-4 w-full max-w-5xl mx-auto flex-1 flex flex-col pb-24"></main>
     </div>
 
     <script>
@@ -288,6 +335,215 @@ const outputLookup = {
     "GameModifierAbilities_IgnoreRatingsPenaltiesSpeed": { l: "GameModifierAbilities_IgnoreRatingsPenaltiesSpeed", d: "Negates speed penalties regardless of ratings." },
     "GameModifierAbilities_IgnoreRatingsPenaltiesCOD": { l: "GameModifierAbilities_IgnoreRatingsPenaltiesCOD", d: "Negates Change of Direction penalties." },
     "GameModifierAbilities_IgnoreRatingsPenaltiesAcceleration": { l: "GameModifierAbilities_IgnoreRatingsPenaltiesAcceleration", d: "Negates acceleration penalties." }
+};
+const positionMap = {
+  "3rd-down-threat": ["WR", "TE"],
+  "Acrobat": ["DB", "WR"],
+  "Adrenaline-Rush": ["DL"],
+  "Agile-Extender": ["QB"],
+  "All-Day": ["OL"],
+  "Anchored-Extender": ["QB"],
+  "Arm-Bar": ["HB"],
+  "Bogo": ["DL", "LB"],
+  "Backfield-Master": ["HB"],
+  "Backfield-Mismatch": ["HB"],
+  "Backlash": ["HB"],
+  "Backyard HB": ["HB"],
+  "Backyard QB": ["QB"],
+  "Backyard TE": ["TE"],
+  "Backyard WR": ["WR"],
+  "Balance-Beam": ["HB"],
+  "Bench-Press": ["DB"],
+  "Bruiser": ["HB"],
+  "Bulldozer": ["HB"],
+  "Chuck-Out": ["DB", "LB"],
+  "Closer": ["MULTI"],
+  "Clutch": ["MULTI"],
+  "Clutch-Kicker": ["K"],
+  "Comeback": ["MULTI"],
+  "Conducter": ["QB"],
+  "Crusher": ["LB", "DB"],
+  "Dashing-Deadeye": ["QB"],
+  "Deep-Elite": ["WR", "TE"],
+  "Deep-In-Elite": ["WR", "TE"],
+  "Deep-In-Zone-KO": ["DB", "LB"],
+  "Deep-Out-Elite": ["WR"],
+  "Deep-Out-Zone-KO": ["DB", "LB"],
+  "Deep-Route-KO": ["DB"],
+  "Deep-Zone-KO": ["DB", "LB"],
+  "Defensive-Rally": ["DL"],
+  "Deflator": ["LB", "DB"],
+  "Demoralizer": ["LB", "DB"],
+  "Double-Or-Nothing": ["DL"],
+  "Edge-Protector": ["OL"],
+  "Edge-Threat": ["DL"],
+  "Edge-Threat-Elite": ["DL"],
+  "El-Toro": ["DL"],
+  "Energizer": ["HB"],
+  "Enforcer": ["LB", "DB"],
+  "Enforcer-Supreme": ["LB", "DB"],
+  "Evasive": ["HB"],
+  "Extra-Credit": ["DL"],
+  "Extra-Pop": ["LB", "DB"],
+  "Fastbreak": ["QB"],
+  "Fearless": ["QB"],
+  "Film-Study": ["MULTI"],
+  "Flat-Zone-KO": ["DB", "LB"],
+  "Focused-Kicker": ["K"],
+  "Fool-Me-Once": ["OL"],
+  "Form-Tackler": ["LB", "DB"],
+  "Gift-Wrapped": ["QB"],
+  "Goal-Line-Back": ["HB"],
+  "Goal-Line-Stuff": ["DL", "LB"],
+  "Grab-N-Go": ["HB", "WR"],
+  "Gunslinger": ["QB"],
+  "Gutsy-Scrambler": ["QB"],
+  "High-Point-Deadeye": ["QB"],
+  "Homer": ["MULTI"],
+  "Honorary-Lineman": ["WR", "TE", "HB"],
+  "Human-Joystick": ["HB"],
+  "Identifier": ["MULTI"],
+  "Indoor-Baller": ["MULTI"],
+  "Inside-Deadeye": ["QB"],
+  "Inside-Shade": ["DB"],
+  "Inside-Stuff": ["DL", "LB"],
+  "Instant-Rebate": ["DL", "LB"],
+  "Interior-Threat": ["DL"],
+  "Ironman": ["MULTI"],
+  "Juke-Box": ["HB"],
+  "Leap-Frog": ["HB"],
+  "Lifeguard": ["OL"],
+  "Linchpin": ["OL"],
+  "Lofting-Deadeye": ["QB"],
+  "Long-Range-Deadeye": ["QB"],
+  "Lumberjack": ["LB", "DB"],
+  "Lurk-Artist": ["DB"],
+  "Lurker": ["DB"],
+  "Max-Effort": ["DL"],
+  "Master-Tactician": ["QB"],
+  "Matador": ["OL"],
+  "Matchup-Nightmare": ["WR", "TE"],
+  "Medium-Route-KO": ["DB"],
+  "Menace": ["LB", "DB"],
+  "Mid-Elite": ["WR", "TE"],
+  "Mid-In-Elite": ["WR", "TE"],
+  "Mid-Out-Elite": ["WR"],
+  "Mid-Zone-KO": ["DB", "LB"],
+  "Mr-Big-Stop": ["LB", "DB"],
+  "Nasty-Streak": ["OL"],
+  "Natural-Talent": ["OL"],
+  "No-Outsiders": ["DL", "LB"],
+  "No-Look-Deadeye": ["QB"],
+  "Omniscient": ["QB"],
+  "On-The-Ball": ["DB", "LB"],
+  "One-Step-Ahead": ["DB"],
+  "Out-My-Way": ["DL", "LB"],
+  "Outmatched": ["DB"],
+  "Outside-Apprentice": ["WR"],
+  "Outside-Shade": ["DB"],
+  "Pass-Commited": ["DL", "LB"],
+  "Pass-Lead-Elite": ["QB"],
+  "Pass-Protector": ["OL"],
+  "Persistent": ["MULTI"],
+  "Pick Artist": ["DB"],
+  "Playmaker": ["WR", "TE", "HB"],
+  "Pocket-Deadeye": ["QB"],
+  "Post-Up": ["OL"],
+  "Precision-Kicker": ["K"],
+  "Protected": ["QB"],
+  "Puller-Elite": ["OL"],
+  "QB-Playmaker": ["QB"],
+  "Quick-Draw": ["QB"],
+  "RB-Apprentice": ["HB"],
+  "Reach-Elite": ["DL", "LB"],
+  "Reach-For-It": ["HB"],
+  "Recuperation": ["MULTI"],
+  "Red-Zone-Deadeye": ["QB"],
+  "Red-Zone-Threat": ["WR", "TE"],
+  "Return-Man": ["HB"],
+  "Ripper": ["DL"],
+  "Roaming-Deadeye": ["QB"],
+  "Route-Apprentice": ["WR", "TE", "HB"],
+  "Route-Technician": ["WR", "TE"],
+  "Run-Committed": ["DL", "LB"],
+  "Run-Protector": ["OL"],
+  "Run-Stopper": ["DL", "LB"],
+  "Runoff-Elite": ["WR", "TE", "HB"],
+  "Safety-Valve": ["QB"],
+  "Screen-Protector": ["OL"],
+  "Second-Wind": ["MULTI"],
+  "Secure-Protector": ["OL"],
+  "Secure-Tackler": ["LB", "DB"],
+  "Set-Feet-Lead": ["QB"],
+  "Short-Elite": ["WR", "TE"],
+  "Short-In-Elite": ["WR", "TE"],
+  "Short-Out-Elite": ["WR"],
+  "Short-Route-KO": ["DB"],
+  "Sideline-Deadeye": ["QB"],
+  "Sleight-of-Hand": ["QB"],
+  "Slot-Apprentice": ["WR"],
+  "Slot-O-Matic": ["WR"],
+  "Spin-Cycle": ["HB"],
+  "Spinner": ["DL"],
+  "Steamroller": ["HB"],
+  "Stonewall": ["LB", "DB"],
+  "Strip-Specialist": ["LB", "DB"],
+  "Swim-Club": ["DL"],
+  "Tackle-Supreme": ["LB", "DB"],
+  "Tank": ["HB"],
+  "TE Apprentice": ["TE"],
+  "Tear Proof": ["OL"],
+  "Threat-Detector": ["QB"],
+  "Tight-Out": ["QB"],
+  "Tip-Drill": ["WR", "TE", "DB", "HB"],
+  "Tireless-Runner": ["HB"],
+  "Tough-Nut": ["OL"],
+  "Under-Pressure": ["DL"],
+  "Unfakeable": ["LB", "DB"],
+  "Unpredictable": ["DL"],
+  "Unspun": ["OL"],
+  "WR-Apprentice": ["WR"],
+  "Zen Kicker": ["K"],
+  "Ankle-Breaker": ["WR", "TE", "HB"],
+  "Avalanche": ["LB", "DB"],
+  "Bazooka": ["QB"],
+  "Blitz": ["DL", "LB"],
+  "Blitz-Radar": ["QB"],
+  "Bottleneck": ["DB"],
+  "Brick-Wall": ["QB"],
+  "Colossus": ["DL"],
+  "Dots": ["QB"],
+  "Double-Me": ["WR", "TE"],
+  "Dual-Threat": ["DL", "LB", "DB"],
+  "Escape-Artist": ["QB"],
+  "Fearmonger": ["DL"],
+  "First-One-Free": ["HB"],
+  "Freight-Train": ["HB"],
+  "Gambit": ["QB"],
+  "GrabAndSmash": ["WR", "TE", "HB"],
+  "Max-Security": ["WR", "TE"],
+  "Mind Reader": ["DB", "LB"],
+  "Momentum-Shift": ["MULTI"],
+  "Mossed": ["WR"],
+  "Omaha": ["QB"],
+  "Phenom": ["WR", "TE", "HB", "DB"],
+  "ProReads": ["QB"],
+  "RACemUp": ["WR", "TE"],
+  "Reinforcement": ["DL", "LB"],
+  "Relentless": ["DL"],
+  "Route-Artist": ["WR"],
+  "Run-&-Gun": ["QB"],
+  "Run-Stuffer": ["DL", "LB"],
+  "Satellite": ["HB"],
+  "Selfless": ["MULTI"],
+  "Shutdown": ["DB"],
+  "Truzz": ["HB"],
+  "Universal-Coverage": ["DB"],
+  "Unstoppable-Force": ["DL"],
+  "Vanguard": ["OL"],
+  "Wrecking Ball": ["HB"],
+  "YACEmUp": ["WR", "TE", "HB"],
+  "Zone-Hawk": ["DB"]
 };
         const abilities = [
             { 
@@ -2393,21 +2649,72 @@ const outputLookup = {
         let filterType = "";
         window.matrixQuery = "";
         window.portalSearchQuery = "";
+        window.triggerFilter = "";
+        window.outputFilter = "";
+        window.posFilter = "";
 
-        function resetAndHome() { 
-            mainSearchQuery = ""; 
-            filterTag = null; 
-            compareIds = []; 
-            render('list'); 
+        function getTriggerCounts() {
+            const counts = {};
+            abilities.forEach(a => {
+                a.triggers.active.forEach(t => { counts[t] = (counts[t] || 0) + 1; });
+                a.triggers.deactive.forEach(t => { counts[t] = (counts[t] || 0) + 1; });
+            });
+            return Object.entries(counts).sort((a, b) => a[1] - b[1]);
         }
 
-        function setGlobalTab(t) { 
-            currentTab = t; 
-            filterTag = null; 
+        function getOutputCounts() {
+            const counts = {};
+            abilities.forEach(a => {
+                Object.values(a.outputGroups).flat().forEach(k => { counts[k] = (counts[k] || 0) + 1; });
+            });
+            return Object.entries(counts).sort((a, b) => a[1] - b[1]);
+        }
+
+        function getAllPositions() {
+            const posSet = new Set();
+            abilities.forEach(a => { (positionMap[a.id] || []).forEach(p => posSet.add(p)); });
+            return [...posSet].sort();
+        }
+
+        function getPositionColors(pos) {
+            const colors = { QB: "bg-red-100 text-red-700", WR: "bg-purple-100 text-purple-700", HB: "bg-amber-100 text-amber-700", TE: "bg-cyan-100 text-cyan-700", OL: "bg-gray-200 text-gray-700", DL: "bg-rose-100 text-rose-700", LB: "bg-orange-100 text-orange-700", DB: "bg-sky-100 text-sky-700", K: "bg-lime-100 text-lime-700", MULTI: "bg-indigo-100 text-indigo-700" };
+            return colors[pos] || "bg-gray-100 text-gray-600";
+        }
+
+        function extractValues(desc) {
+            const vals = [];
+            const pctMatch = desc.match(/(\d+)%\s*chance/i);
+            if (pctMatch) vals.push({ label: pctMatch[0], type: "chance" });
+            const stamMatch = desc.match(/(\d+\.?\d*)\s*stamina/i);
+            if (stamMatch) vals.push({ label: stamMatch[0], type: "stamina" });
+            const yardMatch = desc.match(/\+(\d+)y\b/i);
+            if (yardMatch) vals.push({ label: yardMatch[0], type: "yard" });
+            const pctMod = desc.match(/(\d+)%\s*(more|increase|boost|reduction|reduces)/i);
+            if (pctMod && !pctMatch) vals.push({ label: pctMod[0], type: "mod" });
+            return vals;
+        }
+
+        function resetAndHome() {
+            mainSearchQuery = "";
+            filterTag = null;
+            window.triggerFilter = "";
+        window.outputFilter = "";
+        window.posFilter = "";
+            compareIds = [];
+            render('list');
+        }
+
+        function setGlobalTab(t) {
+            currentTab = t;
+            filterTag = null;
+            window.triggerFilter = "";
+        window.outputFilter = "";
+        window.posFilter = "";
             compareIds = []; 
             document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
             document.getElementById(`tab-${t}`).classList.add('active');
-            render('list'); 
+            if (t === 'outputs') { window.outputBrowseQuery = ''; render('outputs-browse'); }
+            else render('list'); 
         }
 
         function toggleCompare(id) {
@@ -2419,7 +2726,7 @@ const outputLookup = {
 
         function updateGlobalCounter() {
             const vsHeader = document.getElementById('vs-count-main');
-            if(vsHeader) vsHeader.innerHTML = compareIds.length > 0 ? `<span class="bg-yellow-500 text-black px-1.5 py-0.5 rounded-sm font-black text-[7px]">VS: ${compareIds.length}</span>` : '';
+            if(vsHeader) vsHeader.innerHTML = compareIds.length > 0 ? `<span class="bg-blue-600 text-white px-3 py-1 rounded-full font-bold text-[13px]">VS: ${compareIds.length}</span>` : '';
         }
 
         function filterByTrait(key) { 
@@ -2437,8 +2744,21 @@ const outputLookup = {
             updateGlobalCounter();
 
             if (view === 'list') {
-                let filtered = filterTag ? abilities.filter(a => [...a.triggers.active, ...a.triggers.deactive, ...Object.values(a.outputGroups).flat()].includes(filterTag)) 
+                const triggerCounts = getTriggerCounts();
+                const outputCounts = getOutputCounts();
+                const allPositions = getAllPositions();
+
+                let filtered = filterTag ? abilities.filter(a => [...a.triggers.active, ...a.triggers.deactive, ...Object.values(a.outputGroups).flat()].includes(filterTag))
                                          : abilities.filter(a => (mainSearchQuery ? true : a.category === currentTab) && a.name.toLowerCase().includes(mainSearchQuery.toLowerCase()));
+                if (window.triggerFilter && !filterTag) {
+                    filtered = filtered.filter(a => a.triggers.active.includes(window.triggerFilter) || a.triggers.deactive.includes(window.triggerFilter));
+                }
+                if (window.outputFilter && !filterTag) {
+                    filtered = filtered.filter(a => Object.values(a.outputGroups).flat().includes(window.outputFilter));
+                }
+                if (window.posFilter && !filterTag) {
+                    filtered = filtered.filter(a => (positionMap[a.id] || []).includes(window.posFilter));
+                }
 
                 let filterLabel = "";
                 if (filterTag) {
@@ -2446,92 +2766,234 @@ const outputLookup = {
                     filterLabel = `${filterType}: ${lookup.l}`;
                 }
 
+                const lastId = window.lastDetailId;
+                const lastAbility = lastId ? abilities.find(x => x.id === lastId) : null;
+                const lastOutputs = lastAbility ? new Set(Object.values(lastAbility.outputGroups).flat()) : null;
+
                 app.innerHTML = `
-                    <div class="mb-2 space-y-1">
-                        <input type="text" id="main-search" placeholder="Filter by ability..." value="${mainSearchQuery}" class="w-full bg-zinc-900 border border-zinc-800 p-1.5 rounded text-[8px] font-black uppercase outline-none focus:border-yellow-500">
+                    <div class="mb-5 space-y-3">
+                        <div class="flex gap-2 items-stretch flex-wrap">
+                            <div class="search-wrap flex-1" style="min-width:180px">
+                                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                                <input type="text" id="main-search" placeholder="Search ${abilities.filter(a=>a.category===currentTab).length} abilities..." value="${mainSearchQuery}" class="w-full bg-white border-2 border-gray-200 py-3 rounded-xl text-[15px] font-medium outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all placeholder-gray-400 shadow-sm">
+                            </div>
+                            <select id="pos-filter" class="appearance-none bg-white border-2 ${window.posFilter ? 'border-violet-400 ring-2 ring-violet-100' : 'border-gray-200'} h-full pl-3 pr-8 rounded-xl text-[13px] font-bold text-gray-600 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer" style="min-width:100px;padding-top:12px;padding-bottom:12px">
+                                <option value="">Position</option>
+                                ${allPositions.map(p => `<option value="${p}" ${window.posFilter === p ? 'selected' : ''}>${p}</option>`).join('')}
+                            </select>
+                            <select id="trigger-filter" class="appearance-none bg-white border-2 ${window.triggerFilter ? 'border-emerald-400 ring-2 ring-emerald-100' : 'border-gray-200'} h-full pl-3 pr-8 rounded-xl text-[13px] font-bold text-gray-600 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer" style="min-width:160px;padding-top:12px;padding-bottom:12px">
+                                <option value="">Trigger</option>
+                                ${triggerCounts.map(([k, c]) => `<option value="${k}" ${window.triggerFilter === k ? 'selected' : ''}>${triggerLookup[k]?.l || k} (${c})</option>`).join('')}
+                            </select>
+                            <select id="output-filter" class="appearance-none bg-white border-2 ${window.outputFilter ? 'border-blue-400 ring-2 ring-blue-100' : 'border-gray-200'} h-full pl-3 pr-8 rounded-xl text-[13px] font-bold text-gray-600 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer" style="min-width:160px;padding-top:12px;padding-bottom:12px">
+                                <option value="">Output</option>
+                                ${outputCounts.map(([k, c]) => `<option value="${k}" ${window.outputFilter === k ? 'selected' : ''}>${outputLookup[k]?.l || k} (${c})</option>`).join('')}
+                            </select>
+                        </div>
                         ${filterTag ? `
-                            <div class="flex items-center justify-between bg-yellow-500/10 border border-yellow-500/40 p-1.5 rounded-sm">
-                                <span class="gold-text font-black text-[7px] tracking-tighter uppercase italic">${filterLabel}</span>
-                                <button onclick="filterTag=null; render('list')" class="text-white text-[10px] leading-none px-1">✕</button>
+                            <div class="flex items-center gap-3 bg-blue-50 border border-blue-200 px-4 py-2.5 rounded-xl">
+                                <span class="accent-text font-bold text-[13px] tracking-tight uppercase flex-1">${filterLabel}</span>
+                                <span class="stat-pill">${filtered.length} result${filtered.length !== 1 ? 's' : ''}</span>
+                                <button onclick="filterTag=null; render('list')" class="text-gray-400 hover:text-red-500 text-lg leading-none px-1 font-bold transition-colors" title="Clear filter">&#10005;</button>
                             </div>
                         ` : ''}
+                        ${(window.triggerFilter || window.outputFilter || window.posFilter) && !filterTag ? `
+                            <div class="flex items-center gap-2 flex-wrap">
+                                ${window.posFilter ? `<div class="flex items-center gap-2 bg-violet-50 border border-violet-200 px-3 py-1.5 rounded-lg"><span class="text-violet-700 font-bold text-[12px] uppercase">${window.posFilter}</span><button onclick="window.posFilter=''; render('list')" class="text-gray-400 hover:text-red-500 font-bold text-sm leading-none">&#10005;</button></div>` : ''}
+                                ${window.triggerFilter ? `<div class="flex items-center gap-2 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg"><span class="text-emerald-700 font-bold text-[12px] uppercase">Trigger: ${triggerLookup[window.triggerFilter]?.l || window.triggerFilter}</span><button onclick="window.triggerFilter=''; render('list')" class="text-gray-400 hover:text-red-500 font-bold text-sm leading-none">&#10005;</button></div>` : ''}
+                                ${window.outputFilter ? `<div class="flex items-center gap-2 bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-lg"><span class="text-blue-700 font-bold text-[12px] uppercase">Output: ${outputLookup[window.outputFilter]?.l || window.outputFilter}</span><button onclick="window.outputFilter=''; render('list')" class="text-gray-400 hover:text-red-500 font-bold text-sm leading-none">&#10005;</button></div>` : ''}
+                                <span class="stat-pill">${filtered.length} result${filtered.length !== 1 ? 's' : ''}</span>
+                            </div>
+                        ` : ''}
+                        ${!filterTag && !window.triggerFilter && !window.outputFilter && !window.posFilter && filtered.length > 0 ? `<div class="flex items-center gap-2"><span class="stat-pill">${filtered.length} abilities</span>${compareIds.length > 0 ? `<span class="stat-pill" style="background:#eff6ff;color:#2563eb">${compareIds.length} selected</span>` : ''}${lastAbility ? `<span class="stat-pill" style="background:#fef3c7;color:#92400e">Comparing overlap with ${lastAbility.name}</span><button onclick="window.lastDetailId=null; render('list')" class="text-gray-400 hover:text-red-500 font-bold text-sm leading-none ml-1">&#10005;</button>` : ''}</div>` : ''}
                     </div>
-                    <div class="flex-1 space-y-1">
-                        ${filtered.length === 0 ? '<div class="text-center text-zinc-600 font-black text-[8px] py-10 uppercase">No Data Matches</div>' : ''}
-                        ${filtered.map(a => `
-                            <div class="card-bg p-1.5 flex items-center justify-between border-l-2 ${compareIds.includes(a.id) ? 'border-l-yellow-500 bg-yellow-500/5' : 'border-l-zinc-800'}">
-                                <div class="flex items-center gap-2 flex-1 cursor-pointer" onclick="compareIds=[]; render('detail', '${a.id}')">
-                                    <img src="${iconPath}${a.img}" class="ability-icon" onerror="this.src='https://placehold.co/16x16/111/d4af37?text=?'">
-                                    <div class="font-black uppercase text-[10px] tracking-tight">
-                                        ${a.name} ${a.category === 'xf' ? '<span class="text-red-500 ml-1 font-black text-[8px]">[XF]</span>' : ''}
+                    <div class="ability-grid">
+                        ${filtered.length === 0 ? '<div class="text-center text-gray-400 font-medium text-[15px] py-16 col-span-full">No abilities match your filters</div>' : ''}
+                        ${filtered.map(a => {
+                            const pos = positionMap[a.id] || [];
+                            const vals = extractValues(a.description);
+                            const isAlwaysActive = a.triggers.active.length === 0;
+                            const overlapCount = lastOutputs && a.id !== lastId ? Object.values(a.outputGroups).flat().filter(k => lastOutputs.has(k)).length : 0;
+                            return `
+                            <div class="card-bg px-4 py-3.5 flex items-start gap-3 cursor-pointer border-l-4 ${compareIds.includes(a.id) ? 'border-l-blue-500 bg-blue-50/40' : 'border-l-transparent'}" onclick="compareIds=[]; render('detail', '${a.id}')">
+                                <img src="${iconPath}${a.img}" class="ability-icon flex-shrink-0 mt-0.5" onerror="this.src='https://placehold.co/28x28/f0f0f0/2563eb?text=?'">
+                                <div class="flex-1 min-w-0">
+                                    <div class="font-bold text-[15px] tracking-tight leading-snug flex items-center gap-1.5 flex-wrap">
+                                        ${a.name}
+                                        ${a.category === 'xf' ? '<span class="text-orange-500 font-extrabold text-[11px] bg-orange-50 px-1.5 py-0.5 rounded">XF</span>' : ''}
+                                        ${isAlwaysActive ? '<span class="text-[10px] font-bold text-teal-600 bg-teal-50 px-1.5 py-0.5 rounded uppercase tracking-wide">Always</span>' : `<span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded uppercase tracking-wide">${a.triggers.active.length} cond.</span>`}
+                                    </div>
+                                    <div class="text-gray-400 text-[13px] leading-snug mt-1 line-clamp-2">${a.description.substring(0, 100)}${a.description.length > 100 ? '...' : ''}</div>
+                                    <div class="flex gap-1.5 mt-2 flex-wrap items-center">
+                                        ${pos.map(p => `<span class="text-[10px] font-bold ${getPositionColors(p)} px-1.5 py-0.5 rounded">${p}</span>`).join('')}
+                                        ${a.triggers.active.length > 0 ? `<span class="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">${a.triggers.active.length} trigger${a.triggers.active.length>1?'s':''}</span>` : ''}
+                                        <span class="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">${Object.values(a.outputGroups).flat().length} output${Object.values(a.outputGroups).flat().length>1?'s':''}</span>
+                                        ${vals.length > 0 ? vals.map(v => `<span class="text-[10px] font-bold text-pink-600 bg-pink-50 px-1.5 py-0.5 rounded">${v.label}</span>`).join('') : ''}
+                                        ${overlapCount > 0 ? `<span class="text-[10px] font-bold text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">${overlapCount} shared</span>` : ''}
                                     </div>
                                 </div>
-                                <input type="checkbox" onchange="toggleCompare('${a.id}'); render('list')" ${compareIds.includes(a.id) ? 'checked' : ''}>
-                            </div>`).join('')}
+                                <input type="checkbox" class="flex-shrink-0 mt-1" onclick="event.stopPropagation()" onchange="toggleCompare('${a.id}'); render('list')" ${compareIds.includes(a.id) ? 'checked' : ''}>
+                            </div>`;
+                        }).join('')}
                     </div>
-                    ${compareIds.length > 1 ? `<button onclick="render('matrix')" class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-yellow-500 text-black font-black px-6 py-2 rounded uppercase text-[8px] z-50 shadow-lg">RUN COMPARISON</button>` : ''}`;
-                
+                    ${compareIds.length > 1 ? `<button onclick="render('matrix')" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3.5 rounded-xl text-[15px] z-50 shadow-xl shadow-blue-300/40 transition-all hover:shadow-2xl flex items-center gap-2"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg> Compare ${compareIds.length} Abilities</button>` : ''}`;
+
                 const mSearch = document.getElementById('main-search');
                 if (document.activeElement !== mSearch && mainSearchQuery.length > 0) {
                     mSearch.focus();
                     mSearch.setSelectionRange(mSearch.value.length, mSearch.value.length);
                 }
-                mSearch.addEventListener('input', (e) => { 
-                    mainSearchQuery = e.target.value; 
+                mSearch.addEventListener('input', (e) => {
+                    mainSearchQuery = e.target.value;
                     if (filterTag) filterTag = null;
-                    render('list'); 
+                    render('list');
+                });
+                const tFilter = document.getElementById('trigger-filter');
+                if (tFilter) tFilter.addEventListener('change', (e) => {
+                    window.triggerFilter = e.target.value;
+                    if (filterTag) filterTag = null;
+                    render('list');
+                });
+                const oFilter = document.getElementById('output-filter');
+                if (oFilter) oFilter.addEventListener('change', (e) => {
+                    window.outputFilter = e.target.value;
+                    if (filterTag) filterTag = null;
+                    render('list');
+                });
+                const pFilter = document.getElementById('pos-filter');
+                if (pFilter) pFilter.addEventListener('change', (e) => {
+                    window.posFilter = e.target.value;
+                    if (filterTag) filterTag = null;
+                    render('list');
                 });
             }
 
-            if (view === 'detail') {
+                        if (view === 'detail') {
+                window.lastDetailId = dataId;
                 const a = abilities.find(x => x.id === dataId);
+                const pos = positionMap[a.id] || [];
+                const vals = extractValues(a.description);
                 app.innerHTML = `
-                    <div class="flex justify-between items-center mb-2">
-                        <button onclick="compareIds=[]; render('list')" class="text-zinc-500 font-black text-[7px] uppercase">← BACK</button>
-                        <button onclick="openPortal('${a.id}')" class="gold-text font-black text-[7px] border border-yellow-500/30 px-2 py-0.5">COMPARE +</button>
+                    <div class="flex justify-between items-center mb-5">
+                        <button onclick="compareIds=[]; render('list')" class="text-gray-500 hover:text-gray-800 font-semibold text-[14px] flex items-center gap-1.5 transition-colors"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to list</button>
+                        <button onclick="openPortal('${a.id}')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[14px] px-4 py-2 rounded-lg transition-colors flex items-center gap-1.5"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg> Compare</button>
                     </div>
-                    <div class="flex items-center gap-2 mb-2">
-                        <img src="${iconPath}${a.img}" class="ability-icon-lg card-bg p-1" onerror="this.src='https://placehold.co/32x32/111/d4af37?text=?'">
-                        <h2 class="text-md font-black gold-text uppercase leading-none text-[12px]">${a.name} ${a.category === 'xf' ? '<span class="text-red-500 text-[10px] ml-1">[XF]</span>' : ''}</h2>
+                    <div class="flex items-center gap-4 mb-5">
+                        <img src="${iconPath}${a.img}" class="w-14 h-14 object-contain bg-white rounded-2xl p-2 border border-gray-200 shadow-sm" onerror="this.src='https://placehold.co/56x56/f0f0f0/2563eb?text=?'">
+                        <div>
+                            <h2 class="text-2xl font-black text-gray-900 leading-tight">${a.name} ${a.category === 'xf' ? '<span class="text-orange-500 text-[13px] ml-2 bg-orange-50 px-2 py-1 rounded-md font-extrabold align-middle">X-FACTOR</span>' : ''}</h2>
+                            <div class="flex gap-2 mt-1.5 flex-wrap">${pos.map(p => `<span class="text-[11px] font-bold ${getPositionColors(p)} px-2 py-0.5 rounded">${p}</span>`).join('')}${vals.map(v => `<span class="text-[11px] font-bold text-pink-600 bg-pink-50 px-2 py-0.5 rounded">${v.label}</span>`).join('')}</div>
+                            <div class="flex gap-2 mt-1.5">${a.triggers.active.length > 0 ? `<span class="stat-pill" style="background:#d1fae5;color:#059669">${a.triggers.active.length} activation${a.triggers.active.length>1?'s':''}</span>` : '<span class="stat-pill" style="background:#d1fae5;color:#059669">Always active</span>'}${a.triggers.deactive.length > 0 ? `<span class="stat-pill" style="background:#fee2e2;color:#dc2626">${a.triggers.deactive.length} deactivation${a.triggers.deactive.length>1?'s':''}</span>` : ''}<span class="stat-pill">${Object.values(a.outputGroups).flat().length} outputs</span></div>
+                        </div>
                     </div>
-                    <div class="card-bg p-2 border-l-2 border-yellow-500 mb-2 italic text-[10px] text-zinc-400">"${a.description}"</div>
-                    <div class="space-y-1.5">
-                        <div class="grid grid-cols-2 gap-1.5">
-                            <div class="space-y-1">
-                                <div class="text-[6px] font-black uppercase text-green-500">Activations</div>
-                                <div class="card-bg p-1.5">
-                                    ${a.triggers.active.map(k => `
-                                        <div class="group-item cursor-pointer" onclick="filterByTrait('${k}')">
-                                            <div class="font-black text-[10px] uppercase">${triggerLookup[k]?.l || k}</div>
-                                            <div class="text-[8px] text-zinc-500 leading-none">${triggerLookup[k]?.d || ''}</div>
-                                        </div>`).join('')}
-                                </div>
+                    <div class="desc-callout mb-6">${a.description}</div>
+                    <div class="space-y-5">
+                        <div class="grid grid-cols-2 gap-4 triggers-grid">
+                            <div class="trigger-card green">
+                                <div class="label">Activations</div>
+                                ${a.triggers.active.length === 0 ? '<div class="text-gray-400 text-[14px] italic">No activation conditions — always active</div>' : ''}
+                                ${a.triggers.active.map(k => `
+                                    <div class="group-item" onclick="filterByTrait('${k}')">
+                                        <div class="font-bold text-[14px] text-gray-800">${triggerLookup[k]?.l || k}</div>
+                                        <div class="text-[13px] text-gray-500 leading-snug mt-0.5">${triggerLookup[k]?.d || ''}</div>
+                                    </div>`).join('')}
                             </div>
-                            <div class="space-y-1">
-                                <div class="text-[6px] font-black uppercase text-red-500">Deactivations</div>
-                                <div class="card-bg p-1.5">
-                                    ${a.triggers.deactive.map(k => `
-                                        <div class="group-item cursor-pointer" onclick="filterByTrait('${k}')">
-                                            <div class="font-black text-[10px] uppercase">${triggerLookup[k]?.l || k}</div>
-                                            <div class="text-[8px] text-zinc-500 leading-none">${triggerLookup[k]?.d || ''}</div>
-                                        </div>`).join('')}
-                                </div>
+                            <div class="trigger-card red">
+                                <div class="label">Deactivations</div>
+                                ${a.triggers.deactive.length === 0 ? '<div class="text-gray-400 text-[14px] italic">No deactivation conditions</div>' : ''}
+                                ${a.triggers.deactive.map(k => `
+                                    <div class="group-item" onclick="filterByTrait('${k}')">
+                                        <div class="font-bold text-[14px] text-gray-800">${triggerLookup[k]?.l || k}</div>
+                                        <div class="text-[13px] text-gray-500 leading-snug mt-0.5">${triggerLookup[k]?.d || ''}</div>
+                                    </div>`).join('')}
                             </div>
                         </div>
-                        <div class="text-[6px] font-black uppercase text-zinc-500 mt-1">Output Analysis</div>
+                        <h3 class="text-[13px] font-extrabold uppercase text-gray-400 tracking-widest mt-1">Outputs</h3>
                         ${Object.entries(a.outputGroups).map(([g, keys]) => `
-                            <div class="card-bg p-1.5">
-                                <div class="gold-text text-[8px] font-black uppercase mb-1 border-b border-zinc-800 pb-0.5">${g}</div>
+                            <div class="output-card">
+                                <div class="output-card-header">${g}</div>
+                                <div class="output-card-body">
                                 ${keys.map(k => `
-                                    <div onclick="filterByTrait('${k}')" class="group-item cursor-pointer">
-<div class="flex justify-between items-end">
-    <div class="text-[10px] font-bold ">${outputLookup[k]?.l || k}</div>
-    <div class="gold-text font-black text-[9px] mb-[1px]">♻️ ${getOutputCount(k)}</div>
+                                    <div onclick="filterByTrait('${k}')" class="group-item">
+<div class="flex justify-between items-center gap-2">
+    <div class="text-[14px] font-semibold text-gray-800">${outputLookup[k]?.l || k}</div>
+    <span class="text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full flex-shrink-0 whitespace-nowrap">${getOutputCount(k)} shared</span>
 </div>
-<div class="text-[8px] text-zinc-500 leading-none">${outputLookup[k]?.d || ''}</div>
+<div class="text-[13px] text-gray-500 leading-snug mt-1">${outputLookup[k]?.d || ''}</div>
                                     </div>`).join('')}
+                                </div>
                             </div>`).join('')}
                     </div>`;
+            }
+
+            if (view === 'outputs-browse') {
+                const outputSearch = (window.outputBrowseQuery || "").toLowerCase();
+                const outputCats = {};
+                abilities.forEach(a => {
+                    Object.values(a.outputGroups).flat().forEach(k => {
+                        if (!outputCats[k]) outputCats[k] = [];
+                        if (!outputCats[k].find(x => x.id === a.id)) outputCats[k].push(a);
+                    });
+                });
+                const catGroups = { "Catching & Receiving": [], "Passing & QB": [], "Defense & Pass Rush": [], "Running & Tackling": [], "Pre-Play & General": [], "Other": [] };
+                Object.entries(outputCats).forEach(([k, abs]) => {
+                    if (k.startsWith("Catching_")) catGroups["Catching & Receiving"].push([k, abs]);
+                    else if (k.startsWith("Passing_")) catGroups["Passing & QB"].push([k, abs]);
+                    else if (k.startsWith("CatchingDef_") || k.startsWith("BlockingDef_") || k.startsWith("Defense_")) catGroups["Defense & Pass Rush"].push([k, abs]);
+                    else if (k.startsWith("Running_") || k.startsWith("Tackle_")) catGroups["Running & Tackling"].push([k, abs]);
+                    else if (k.startsWith("Preplay_") || k.startsWith("General_") || k.startsWith("Blocking_") || k.startsWith("GameModifier") || k.startsWith("AIHint")) catGroups["Pre-Play & General"].push([k, abs]);
+                    else catGroups["Other"].push([k, abs]);
+                });
+                Object.values(catGroups).forEach(arr => arr.sort((a, b) => a[1].length - b[1].length));
+
+                app.innerHTML = `
+                    <div class="mb-5 space-y-3">
+                        <div class="search-wrap">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                            <input type="text" id="output-browse-search" placeholder="Search outputs..." value="${window.outputBrowseQuery || ''}" class="w-full bg-white border-2 border-gray-200 py-3 rounded-xl text-[15px] font-medium outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all placeholder-gray-400 shadow-sm">
+                        </div>
+                        <span class="stat-pill">${Object.keys(outputCats).length} unique outputs</span>
+                    </div>
+                    <div class="space-y-6">
+                        ${Object.entries(catGroups).filter(([cat, arr]) => arr.length > 0).map(([cat, arr]) => {
+                            const filteredArr = arr.filter(([k, abs]) => (outputLookup[k]?.l || k).toLowerCase().includes(outputSearch) || (outputLookup[k]?.d || '').toLowerCase().includes(outputSearch));
+                            if (filteredArr.length === 0) return '';
+                            return `
+                            <div>
+                                <h3 class="text-[13px] font-extrabold uppercase text-gray-400 tracking-widest mb-3 border-b border-gray-100 pb-2">${cat} (${filteredArr.length})</h3>
+                                <div class="space-y-2">
+                                    ${filteredArr.map(([k, abs]) => `
+                                        <details class="card-bg overflow-hidden">
+                                            <summary class="px-4 py-3 cursor-pointer hover:bg-gray-50 transition-colors flex items-center justify-between gap-3">
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="font-bold text-[14px] accent-text">${outputLookup[k]?.l || k}</div>
+                                                    <div class="text-[12px] text-gray-400 leading-snug mt-0.5">${outputLookup[k]?.d || ''}</div>
+                                                </div>
+                                                <span class="stat-pill flex-shrink-0">${abs.length} abilit${abs.length !== 1 ? 'ies' : 'y'}</span>
+                                            </summary>
+                                            <div class="px-4 pb-3 pt-1 border-t border-gray-100 bg-gray-50/50">
+                                                <div class="grid gap-1.5" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))">
+                                                    ${abs.map(a => `
+                                                        <div class="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white cursor-pointer transition-colors" onclick="compareIds=[]; render('detail', '${a.id}')">
+                                                            <img src="${iconPath}${a.img}" class="w-5 h-5 object-contain" onerror="this.src='https://placehold.co/20x20/f0f0f0/2563eb?text=?'">
+                                                            <span class="text-[13px] font-semibold text-gray-700">${a.name}</span>
+                                                            ${a.category === 'xf' ? '<span class="text-orange-500 text-[10px] font-bold">XF</span>' : ''}
+                                                        </div>`).join('')}
+                                                </div>
+                                            </div>
+                                        </details>`).join('')}
+                                </div>
+                            </div>`;
+                        }).join('')}
+                    </div>`;
+
+                const obSearch = document.getElementById('output-browse-search');
+                if (obSearch) {
+                    obSearch.addEventListener('input', (e) => {
+                        window.outputBrowseQuery = e.target.value;
+                        render('outputs-browse');
+                    });
+                }
             }
 
             if (view === 'matrix') {
@@ -2544,47 +3006,47 @@ const outputLookup = {
                 const filterRow = (key) => (triggerLookup[key]?.l || outputLookup[key]?.l || key).toLowerCase().includes(matrixSearch);
 
                 app.innerHTML = `
-                    <div class="flex gap-2 items-center mb-2">
-                        <button onclick="compareIds=[]; render('list')" class="text-zinc-500 font-black text-[7px] uppercase">← EXIT</button>
-                        <input type="text" id="matrix-inner-search" placeholder="Filter by outputs/triggers..." value="${window.matrixQuery || ''}" class="flex-1 bg-zinc-900 border border-zinc-800 p-1 rounded text-[7px] font-black uppercase outline-none focus:border-yellow-500">
+                    <div class="flex gap-3 items-center mb-4">
+                        <button onclick="compareIds=[]; render('list')" class="text-gray-500 hover:text-gray-700 font-bold text-[14px] transition-colors">&larr; Exit</button>
+                        <input type="text" id="matrix-inner-search" placeholder="Filter outputs & triggers..." value="${window.matrixQuery || ''}" class="flex-1 bg-white border-2 border-gray-200 px-4 py-2.5 rounded-xl text-[14px] font-medium outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all placeholder-gray-400 shadow-sm">
                     </div>
-                    <div class="matrix-container card-bg custom-scroll flex-1">
+                    <div class="matrix-container custom-scroll flex-1">
                         <table class="matrix-table">
-                            <tr>
-                                <th class="sticky-col gold-text text-[8px]">CORE_DATA</th>
-                                ${selected.map(a => `<th class="check-col"><div class="header-cell-content"><img src="${iconPath}${a.img}" class="matrix-icon" onerror="this.src='https://placehold.co/18x18/111/d4af37?text=?'"><div class="header-text-rotated">${a.name} ${a.category === 'xf' ? '<br><span class="text-red-500 text-[7px]">[XF]</span>' : ''}</div></div></th>`).join('')}
+                            <tr style="background:#f8f9fb">
+                                <th class="sticky-col text-[13px] font-bold text-gray-500 uppercase" style="background:#f8f9fb">Attribute</th>
+                                ${selected.map(a => `<th class="check-col" style="background:#f8f9fb"><div class="header-cell-content"><img src="${iconPath}${a.img}" class="matrix-icon" onerror="this.src='https://placehold.co/28x28/f0f0f0/2563eb?text=?'"><div class="header-text-rotated">${a.name} ${a.category === 'xf' ? '<br><span class="text-orange-500 text-[11px] font-extrabold">XF</span>' : ''}</div></div></th>`).join('')}
                             </tr>
                             <tr><td colspan="${selected.length + 1}" class="section-divider">Outputs</td></tr>
                             ${allAttributes.filter(filterRow).map(key => `
     <tr>
-        <td class="sticky-col cursor-pointer hover:bg-white/5" onclick="filterTag='${key}'; filterType='output'; render('list')">
-            <div class="text-[7px] gold-text font-black gold-text">${outputLookup[key]?.l || key}</div>
-            <div class="text-[7px] text-zinc-500 font-medium leading-tight">${outputLookup[key]?.d || ''}</div>
+        <td class="sticky-col cursor-pointer" onclick="filterTag='${key}'; filterType='output'; render('list')">
+            <div class="text-[13px] accent-text font-bold">${outputLookup[key]?.l || key}</div>
+            <div class="text-[12px] text-gray-400 font-medium leading-snug mt-0.5">${outputLookup[key]?.d || ''}</div>
         </td>
         ${selected.map(a => {
             const has = Object.values(a.outputGroups).flat().includes(key);
-            return `<td class="check-col">${has ? '●' : ''}</td>`;
+            return `<td class="check-col">${has ? '<span class="text-blue-600 font-bold">&#10003;</span>' : ''}</td>`;
         }).join('')}
     </tr>
 `).join('')}
                             <tr><td colspan="${selected.length + 1}" class="section-divider">Activations</td></tr>
                             ${allActivations.filter(filterRow).map(key => `
     <tr>
-        <td class="sticky-col cursor-pointer hover:bg-white/5" onclick="filterTag='${key}'; filterType='trigger'; render('list')">
-            <div class="text-[10px] text-green-500 font-black uppercase">${triggerLookup[key]?.l || key}</div>
-            <div class="text-[8px] text-zinc-500 font-medium leading-tight">${triggerLookup[key]?.d || ''}</div>
+        <td class="sticky-col cursor-pointer" onclick="filterTag='${key}'; filterType='trigger'; render('list')">
+            <div class="text-[13px] text-emerald-600 font-bold">${triggerLookup[key]?.l || key}</div>
+            <div class="text-[12px] text-gray-400 font-medium leading-snug mt-0.5">${triggerLookup[key]?.d || ''}</div>
         </td>
-        ${selected.map(a => `<td class="check-col">${a.triggers.active.includes(key) ? '●' : ''}</td>`).join('')}
+        ${selected.map(a => `<td class="check-col">${a.triggers.active.includes(key) ? '<span class="text-emerald-600 font-bold">&#10003;</span>' : ''}</td>`).join('')}
     </tr>
 `).join('')}
                             <tr><td colspan="${selected.length + 1}" class="section-divider">Deactivations</td></tr>
                             ${allDeactivations.filter(filterRow).map(key => `
     <tr>
-        <td class="sticky-col cursor-pointer hover:bg-white/5" onclick="filterTag='${key}'; filterType='trigger'; render('list')">
-            <div class="text-[10px] text-red-500 font-black uppercase text-red-500/80">${triggerLookup[key]?.l || key}</div>
-            <div class="text-[8px] text-zinc-500 font-medium leading-tight">${triggerLookup[key]?.d || ''}</div>
+        <td class="sticky-col cursor-pointer" onclick="filterTag='${key}'; filterType='trigger'; render('list')">
+            <div class="text-[13px] text-red-500 font-bold">${triggerLookup[key]?.l || key}</div>
+            <div class="text-[12px] text-gray-400 font-medium leading-snug mt-0.5">${triggerLookup[key]?.d || ''}</div>
         </td>
-        ${selected.map(a => `<td class="check-col">${a.triggers.deactive.includes(key) ? '●' : ''}</td>`).join('')}
+        ${selected.map(a => `<td class="check-col">${a.triggers.deactive.includes(key) ? '<span class="text-red-500 font-bold">&#10003;</span>' : ''}</td>`).join('')}
     </tr>
 `).join('')}
                         </table>
@@ -2616,24 +3078,24 @@ const outputLookup = {
             const filtered = abilities.filter(a => a.name.toLowerCase().includes(searchQuery));
 
             portal.innerHTML = `
-                <div class="card-bg w-full max-w-xs p-2 border border-yellow-500/40">
-                    <div class="mb-2">
-                        <input type="text" id="portal-search" placeholder="FILTER SELECTIONS..." value="${window.portalSearchQuery || ''}" class="w-full bg-zinc-900 border border-zinc-800 p-1.5 rounded text-[8px] font-black uppercase outline-none focus:border-yellow-500">
+                <div class="bg-white w-full max-w-md p-5 rounded-2xl shadow-2xl border border-gray-200">
+                    <div class="mb-3">
+                        <input type="text" id="portal-search" placeholder="Search abilities to compare..." value="${window.portalSearchQuery || ''}" class="w-full bg-gray-50 border-2 border-gray-200 px-4 py-2.5 rounded-xl text-[14px] font-medium outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all placeholder-gray-400">
                     </div>
-                    <div class="space-y-1 mb-2 max-h-60 overflow-y-auto custom-scroll">
-                        ${filtered.length === 0 ? '<div class="text-center text-zinc-600 font-black text-[7px] py-4 uppercase">No Matches</div>' : ''}
+                    <div class="space-y-1 mb-4 max-h-72 overflow-y-auto custom-scroll">
+                        ${filtered.length === 0 ? '<div class="text-center text-gray-400 font-bold text-[14px] py-8">No matches</div>' : ''}
                         ${filtered.map(a => `
-                            <div class="flex items-center justify-between p-1.5 hover:bg-zinc-800 cursor-pointer" onclick="toggleCompare('${a.id}'); refreshPortalUI()">
-                                <div class="flex items-center gap-2">
-                                    <img src="${iconPath}${a.img}" class="ability-icon" onerror="this.src='https://placehold.co/16x16/111/d4af37?text=?'">
-                                    <span class="font-bold text-[10px] uppercase">${a.name} ${a.category === 'xf' ? '<span class="ml-1 text-red-500 font-black text-[8px]">[XF]</span>' : ''}</span>
+                            <div class="flex items-center justify-between px-3 py-2.5 hover:bg-gray-50 cursor-pointer rounded-lg transition-colors" onclick="toggleCompare('${a.id}'); refreshPortalUI()">
+                                <div class="flex items-center gap-3">
+                                    <img src="${iconPath}${a.img}" class="ability-icon" onerror="this.src='https://placehold.co/28x28/f0f0f0/2563eb?text=?'">
+                                    <span class="font-semibold text-[14px]">${a.name} ${a.category === 'xf' ? '<span class="ml-1.5 text-orange-500 font-extrabold text-[12px] bg-orange-50 px-1.5 py-0.5 rounded">XF</span>' : ''}</span>
                                 </div>
                                 <input type="checkbox" ${compareIds.includes(a.id) ? 'checked' : ''} onchange="event.preventDefault()">
                             </div>`).join('')}
                     </div>
-                    <div class="flex gap-1.5">
-                        <button onclick="compareIds=[]; document.getElementById('portal').remove(); render('list')" class="flex-1 py-1.5 bg-zinc-800 font-black text-[7px]">CANCEL</button>
-                        <button onclick="document.getElementById('portal').remove(); render('matrix')" class="flex-1 py-1.5 bg-yellow-500 text-black font-black text-[7px]">COMPARE (${compareIds.length})</button>
+                    <div class="flex gap-3">
+                        <button onclick="compareIds=[]; document.getElementById('portal').remove(); render('list')" class="flex-1 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold text-[14px] rounded-xl transition-colors">Cancel</button>
+                        <button onclick="document.getElementById('portal').remove(); render('matrix')" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-[14px] rounded-xl transition-colors shadow-lg shadow-blue-200">Compare (${compareIds.length})</button>
                     </div>
                 </div>`;
 
